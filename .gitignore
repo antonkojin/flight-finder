@@ -1,4 +1,8 @@
 *.pyc
 *.log
 *.png
+<<<<<<< HEAD
 /flights.json
+=======
+flights.json
+>>>>>>> 17a463ff5d19f35de5f94b152d6c6b50b57c68f6
