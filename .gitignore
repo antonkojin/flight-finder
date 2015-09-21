@@ -1,2 +1,4 @@
 *.pyc
 *.log
+*.png
+/flights.json
