@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 # functions.py
 
+
+def SortFlights(_list):
+    return sorted(_list, key=lambda d: d['on'])
+
 def WriteJson(filename, data):
     import json
     with open(filename, 'w') as f:
