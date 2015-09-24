@@ -9,7 +9,7 @@
 # # args = parser.parse_args()
 
 import logging
-logging.basicConfig(level=logging.DEBUG)  # debug or info
+logging.basicConfig(level=logging.INFO)  # debug or info
 log = logging.getLogger(__name__)
 
 if __name__ == '__main__':
@@ -23,5 +23,7 @@ if __name__ == '__main__':
     db = ReadJson(config['db'])
     log.debug('database: %s', str(db))
     from weekend_search import WeekendSearch
-    weekend = WeekendSearch(db)
-     
+    from utils import SortFlights
+    weekendFlights = SortFlights(WeekendSearch(db))
+    for flight in weekendFlights:
+        log.info('flight: {}'.format(str(flight)))
