@@ -5,7 +5,15 @@ import logging
 log = logging.getLogger(__name__)
 
 def _isFriday(_date):
-    return True
+    isFriday = _date.isoweekday() == 5
+    return isFriday
+
+def _nextSunday(_date):
+    from datetime import timedelta
+    days = 7 - _date.isoweekday()
+    daysDelta = timedelta(days)
+    sunday = _date + daysDelta
+    return sunday
 
 def WeekendSearch(db):
     weekends = []
@@ -17,5 +25,5 @@ def WeekendSearch(db):
         times = sorted([StringToTime(time_str) for time_str in times_str])
         log.debug("times: " + str(times))
         if _isFriday(_date):
-            pass
+
     return weekends
