@@ -2,10 +2,10 @@
 # scraper.py
 
 # from argparse import ArgumentParser
-# 
+#
 # parser = ArgumentParser()
 # parser.add_argument("get", help="get data")
-# 
+#
 # # args = parser.parse_args()
 
 import logging
@@ -19,15 +19,8 @@ if __name__ == '__main__':
     from utils import ReadConfig
     config = ReadConfig(config_filename)
     log.debug("configs: %s", config)
-    from utils import GenerateDates
-    dates = GenerateDates(config['from_date'], config['to_date'])
-    log.debug("dates: %s", len(dates))
     from utils import ReadJson
     db = ReadJson(config['db'])
     log.debug('database: %s', str(db))
-    from scraper import Scraper
-    with Scraper(dates, config['from'], config['to'], db) as scraper:
-        flights = scraper.getFlights()
-    from utils import WriteJson
-    WriteJson(config['db'], flights)
-
+    from viewer import Viewer
+    view = Viewer(db)
