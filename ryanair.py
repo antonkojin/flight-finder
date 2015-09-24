@@ -2,11 +2,13 @@
 # scraper.py
 
 # from argparse import ArgumentParser
-# 
+#
 # parser = ArgumentParser()
 # parser.add_argument("get", help="get data")
-# 
+#
 # # args = parser.parse_args()
+
+# line in master only
 
 import logging
 logging.basicConfig(level=logging.DEBUG)  # debug or info
@@ -30,4 +32,3 @@ if __name__ == '__main__':
         flights = scraper.getFlights()
     from utils import WriteJson
     WriteJson(config['db'], flights)
-
