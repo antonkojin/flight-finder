@@ -19,7 +19,11 @@ def ReadJson(filename):
 def StringToDate(string):
     from datetime import datetime
     return datetime.strptime(string, '%Y-%m-%d').date()
-                        
+
+def StringToTime(string):
+    from datetime import datetime
+    return datetime.strptime(string, '%H:%M:%S').time()
+
 def ReadConfig(filename):
     config = ReadJson(filename)
     config['from_date'] = StringToDate(config['from_date'])
