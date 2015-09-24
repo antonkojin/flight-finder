@@ -22,5 +22,6 @@ if __name__ == '__main__':
     from utils import ReadJson
     db = ReadJson(config['db'])
     log.debug('database: %s', str(db))
-    from viewer import Viewer
-    view = Viewer(db)
+    from weekend_search import WeekendSearch
+    weekend = WeekendSearch(db)
+    log.info(str(weekend))
