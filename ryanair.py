@@ -24,4 +24,4 @@ if __name__ == '__main__':
     log.debug('database: %s', str(db))
     from weekend_search import WeekendSearch
     weekend = WeekendSearch(db)
-    log.info(str(weekend))
+     

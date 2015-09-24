@@ -20,10 +20,27 @@ def WeekendSearch(db):
     on_db = db['on']
     back_db = db['back']
     from utils import StringToDate, StringToTime
-    for date_str, times_str in on_db.items():
+    for date_str in on_db:
         _date = StringToDate(date_str)
-        times = sorted([StringToTime(time_str) for time_str in times_str])
-        log.debug("times: " + str(times))
         if _isFriday(_date):
-
+            friday = _date
+            sunday = _nextSunday(friday)
+            if str(sunday) in back_db:
+                timesFriday = sorted(list(on_db[str(friday)].keys()))
+                lastTimeFriday = StringToTime(timesFriday[-1])
+                checksLastTimeFriday = sorted(list(on_db[str(friday)][str(lastTimeFriday)].keys()))
+                lastCheckLastTimeFridayStr = checksLastTimeFriday[-1]
+                priceLastCheckLastTimeFriday = float(on_db[str(friday)][str(lastTimeFriday)][lastCheckLastTimeFridayStr])
+                timesSunday = sorted(list(back_db[str(sunday)].keys()))
+                lastTimeSunday = StringToTime(timesSunday[-1])
+                checksLastTimeSunday = sorted(list(back_db[str(sunday)][str(lastTimeSunday)].keys()))
+                lastCheckLastTimeSundayStr = checksLastTimeSunday[-1]
+                priceLastCheckLastTimeSunday = float(on_db[str(friday)][str(lastTimeFriday)][lastCheckLastTimeFridayStr])
+                from collections import OrderedDict
+                flight = OrderedDict([
+                    ('on', friday), ('onTime', lastTimeFriday), ('onPrice', priceLastCheckLastTimeFriday),
+                    ('back', sunday), ('backTime', lastTimeSunday), ('backPrice', priceLastCheckLastTimeSunday)
+                ])
+                log.debug(flight)
+                weekends.append(flight)
     return weekends
