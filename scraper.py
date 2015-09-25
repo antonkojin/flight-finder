@@ -6,12 +6,17 @@ log = logging.getLogger(__name__)
 
 
 class Scraper:
-    def __init__(self, dates, fromAirport, toAirport, db):
-        self.flights = db
+    def __init__(self, config):
+        self.config = config
+        from utils import ReadJson
+        self.flights = ReadJson(self.config['db'])
+        log.debug('database: %s', str(self.flights))
         self.timeout = 5
-        self.dates = dates
-        self.fromAirport = fromAirport
-        self.toAirport = toAirport
+        from utils import GenerateDates
+        self.dates = GenerateDates(self.config['from_date'], self.config['to_date'])
+        log.debug("dates: %s", len(self.dates))
+        self.fromAirport = self.config['from']
+        self.toAirport = self.config['to']
         self.baseUrl = 'https://www.bookryanair.com/SkySales/Booking.aspx?culture=en-GB&lc=en-GB#Search'
         log.debug('scraper: %s', str(self))
         from selenium import webdriver
@@ -156,4 +161,3 @@ class Scraper:
             s += ', '
         s += 'from: ' + self.fromAirport + ' to: ' + self.toAirport
         return s
-
