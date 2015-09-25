@@ -2,4 +2,5 @@
 *.log
 *.png
 /.idea/
-/__pycache__
+/__pycache__/
+/flights.json
