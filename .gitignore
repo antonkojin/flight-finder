@@ -1,5 +1,5 @@
 *.pyc
 *.log
 *.png
-/flights.json
 /.idea/
+/__pycache__/
