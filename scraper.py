@@ -11,7 +11,7 @@ class Scraper:
         from utils import ReadJson
         self.flights = ReadJson(self.config['db'])
         log.debug('database: %s', str(self.flights))
-        self.timeout = 5
+        self.timeout = 15
         from utils import GenerateDates
         self.dates = GenerateDates(self.config['from_date'], self.config['to_date'])
         log.debug("dates: %s", len(self.dates))
@@ -84,6 +84,7 @@ class Scraper:
 
     def getFlights(self):
         for date in self.dates:
+            log.info("parsing date: {}".format(date))
             from selenium.common.exceptions import TimeoutException
             try:
                 self.parse(date)
