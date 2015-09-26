@@ -84,6 +84,7 @@ class Scraper:
 
     def getFlights(self):
         for date in self.dates:
+            log.info("parsing date: {}".format(date))
             from selenium.common.exceptions import TimeoutException
             try:
                 self.parse(date)
