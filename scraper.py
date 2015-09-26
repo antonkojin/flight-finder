@@ -11,7 +11,7 @@ class Scraper:
         from utils import ReadJson
         self.flights = ReadJson(self.config['db'])
         log.debug('database: %s', str(self.flights))
-        self.timeout = 15
+        self.timeout = 5
         from utils import GenerateDates
         self.dates = GenerateDates(self.config['from_date'], self.config['to_date'])
         log.debug("dates: %s", len(self.dates))
@@ -48,7 +48,11 @@ class Scraper:
             _datetime = datetime.combine(_date, _time)
             log.debug('datetime: %s', str(_datetime))
             price_xpath = flight_xpath + '/td[4]/span'
-            price = float(self.webdriver.find_element_by_xpath(price_xpath).text)
+            from selenium.common.exceptions import NoSuchElementException
+            try:
+                price = float(self.webdriver.find_element_by_xpath(price_xpath).text)
+            except NoSuchElementException:
+                continue
             log.debug('%s: %s', str(_datetime), str(price))
             self._add_db(_datetime, price, isReturn=False)
 
@@ -66,7 +70,11 @@ class Scraper:
             _datetime = datetime.combine(_date, _time)
             log.debug('datetime: %s', str(_datetime))
             price_xpath = flight_xpath + '/td[4]/span'
-            price = float(self.webdriver.find_element_by_xpath(price_xpath).text)
+            from selenium.common.exceptions import NoSuchElementException
+            try:
+                price = float(self.webdriver.find_element_by_xpath(price_xpath).text)
+            except NoSuchElementException:
+                continue
             log.debug('%s: %s', str(_datetime), str(price))
             self._add_db(_datetime, price, isReturn=True)
 
@@ -84,16 +92,17 @@ class Scraper:
 
     def getFlights(self):
         for date in self.dates:
-            log.info("parsing date: {}".format(date))
-            from selenium.common.exceptions import TimeoutException
-            try:
-                self.parse(date)
-            except TimeoutException:
-                log.debug('##### web driver restarted due to timeout #####')
-                self.webdriver.quit()
-                from selenium import webdriver
-                self.webdriver = webdriver.PhantomJS()
-                self.parse(date)
+            while True:
+                log.info("parsing date: {}".format(date))
+                from selenium.common.exceptions import TimeoutException
+                try:
+                    self.parse(date)
+                    break
+                except TimeoutException:
+                    log.error('##### web driver restarted due to timeout #####')
+                    self.webdriver.quit()
+                    from selenium import webdriver
+                    self.webdriver = webdriver.PhantomJS()
         return self.flights
 
     def __select_twoway(self):

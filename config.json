@@ -2,6 +2,6 @@
     "from": "BGY",
     "to": "CAG",
     "from_date": "2015-10-01",
-    "to_date": "2015-10-01",
+    "to_date": "2015-12-31",
     "db": "flights.json"
 }
