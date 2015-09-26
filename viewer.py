@@ -20,20 +20,12 @@ class Viewer:
         weekendFlights = self._searchWeekendFlights()
         s = []
         f = '{0:10}\t{1:5}\t{2:>6}\t{3:10}\t{4:5}\t{5:>6}\t{6:>6}'
-        s.append(f.format(
-            'on',
-            'time',
-            'price',
-            'back',
-            'time',
-            'price',
-            'total'
-        ))
+        s.append(f.format('on', 'time', 'price', 'back', 'time', 'price', 'total'))
         for flight in weekendFlights:
             s.append(f.format(
                 str(flight['on']),
                 str(flight['onTime'])[:-3],
-                str(flight['onPrice']).rjust(6),
+                str(flight['onPrice']),
                 str(flight['back']),
                 str(flight['backTime'])[:-3],
                 str(flight['backPrice']),
