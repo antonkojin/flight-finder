@@ -36,10 +36,12 @@ def WeekendSearch(db):
                 checksLastTimeSunday = sorted(list(back_db[str(sunday)][str(lastTimeSunday)].keys()))
                 lastCheckLastTimeSundayStr = checksLastTimeSunday[-1]
                 priceLastCheckLastTimeSunday = float(on_db[str(friday)][str(lastTimeFriday)][lastCheckLastTimeFridayStr])
+                totalPrice = priceLastCheckLastTimeFriday + priceLastCheckLastTimeSunday
                 from collections import OrderedDict
                 flight = OrderedDict([
                     ('on', friday), ('onTime', lastTimeFriday), ('onPrice', priceLastCheckLastTimeFriday),
-                    ('back', sunday), ('backTime', lastTimeSunday), ('backPrice', priceLastCheckLastTimeSunday)
+                    ('back', sunday), ('backTime', lastTimeSunday), ('backPrice', priceLastCheckLastTimeSunday),
+                    ('totalPrice', totalPrice)
                 ])
                 log.debug(flight)
                 weekends.append(flight)
