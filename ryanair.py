@@ -11,8 +11,8 @@
 # line in master only
 
 import logging
-logging.basicConfig(level=logging.INFO)  # debug or info
-# logging.basicConfig(level=logging.DEBUG)  # debug or info
+# logging.basicConfig(level=logging.INFO)  # debug or info
+logging.basicConfig(level=logging.DEBUG)  # debug or info
 log = logging.getLogger(__name__)
 
 if __name__ == '__main__':
