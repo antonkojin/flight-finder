@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 # functions.py
 
+
+def SortFlightsByDate(_list):
+    return sorted(_list, key=lambda d: d['on'])
+
+def SortFlightsByPrice(_list):
+    return sorted(_list, key=lambda d: d['onPrice'] + d['backPrice'])
+
 def WriteJson(filename, data):
     import json
     with open(filename, 'w') as f:
@@ -19,6 +26,10 @@ def ReadJson(filename):
 def StringToDate(string):
     from datetime import datetime
     return datetime.strptime(string, '%Y-%m-%d').date()
+
+def StringToTime(string):
+    from datetime import datetime
+    return datetime.strptime(string, '%H:%M:%S').time()
 
 def ReadConfig(filename):
     config = ReadJson(filename)
