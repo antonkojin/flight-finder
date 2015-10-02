@@ -2,8 +2,8 @@
 # scraper.py
 
 import logging
-logging.basicConfig(level=logging.INFO)  # debug or info
-# logging.basicConfig(level=logging.DEBUG)  # debug or info
+# logging.basicConfig(level=logging.INFO)  # debug or info
+logging.basicConfig(level=logging.DEBUG)  # debug or info
 log = logging.getLogger(__name__)
 
 
@@ -15,7 +15,23 @@ def parseArgs():
     parser.add_argument("config_file")
     args = parser.parse_args()
     log.debug(args)
+    if not args.parse and not args.weekends:
+        parser.error("at least one of --parse or --weekends is required")
     return args
+
+
+def runParse(config):
+    from scraper import Scraper
+    with Scraper(config) as scraper:
+        flights = scraper.getFlights()
+    from utils import WriteJson
+    WriteJson(config['db'], flights)
+
+
+def runWeekends(config):
+    from viewer import Viewer
+    view = Viewer(config)
+    view.printWeekendFlightsByPrice()
 
 
 def run(args):
@@ -24,20 +40,12 @@ def run(args):
     from utils import ReadConfig
     config = ReadConfig(config_filename)
     log.debug("configs: %s", config)
+    if args.parse:
+        runParse(config)
+    if args.weekends:
+        runWeekends(config)
+
 
 if __name__ == "__main__":
     args = parseArgs()
     run(args)
-
-#     from scraper import Scraper
-#     with Scraper(config) as scraper:
-#         flights = scraper.getFlights()
-#     from utils import WriteJson
-#     WriteJson(config['db'], flights)
-
-#    from utils import ReadJson
-#    db = ReadJson(config['db'])
-#    log.debug('database: %s', str(db))
-#    from viewer import Viewer
-#    view = Viewer(config)
-#    view.printWeekendFlightsByPrice()
