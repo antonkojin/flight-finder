@@ -2,7 +2,8 @@
 # scraper.py
 
 import logging
-logging.basicConfig(level=logging.DEBUG)  # debug or info
+logging.basicConfig(level=logging.INFO)  # debug or info
+# logging.basicConfig(level=logging.DEBUG)  # debug or info
 log = logging.getLogger(__name__)
 
 
@@ -23,12 +24,19 @@ def run(args):
     from utils import ReadConfig
     config = ReadConfig(config_filename)
     log.debug("configs: %s", config)
-    from utils import ReadJson
-    db = ReadJson(config['db'])
-    log.debug('database: %s', str(db))
-    from weekend_search import WeekendSearch
-    weekend = WeekendSearch(db)
+
+#    from utils import ReadJson
+#    db = ReadJson(config['db'])
+#    log.debug('database: %s', str(db))
+#    from weekend_search import WeekendSearch
+#    weekend = WeekendSearch(db)
 
 if __name__ == "__main__":
     args = parseArgs()
     run(args)
+
+#     from scraper import Scraper
+#     with Scraper(config) as scraper:
+#         flights = scraper.getFlights()
+#     from utils import WriteJson
+#     WriteJson(config['db'], flights)

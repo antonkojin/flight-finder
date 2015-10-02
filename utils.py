@@ -35,9 +35,13 @@ def GenerateDates(date_start, date_end):
     assert date_start <= date_end, "invalid dates: " + str(date_start) + " " + str(date_end)
     if date_start <= date.today():
         date_start = date.today() + timedelta(1)
+    ryanairDays = 365
+    ryanairDateEnd = date.today() + timedelta(ryanairDays)
+    if ryanairDateEnd < date_end:
+        date_end = ryanairDateEnd
     days_delta = date_end - date_start
     days = days_delta.days + 1
-    dates = list()
+    dates = []
     for days_to_add in range(days):
         day = date_start + timedelta(days_to_add)
         dates.append(day)
