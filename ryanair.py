@@ -1,20 +1,24 @@
 #!/usr/bin/env python3
 # scraper.py
 
-# from argparse import ArgumentParser
-#
-# parser = ArgumentParser()
-# parser.add_argument("get", help="get data")
-#
-# # args = parser.parse_args()
-
 import logging
 logging.basicConfig(level=logging.DEBUG)  # debug or info
 log = logging.getLogger(__name__)
 
-if __name__ == '__main__':
-    from sys import argv as args
-    config_filename = args[1]
+
+def parseArgs():
+    from argparse import ArgumentParser
+    parser = ArgumentParser()
+    parser.add_argument("-p", "--parse", action="store_true")
+    parser.add_argument("-w", "--weekends", action="store_true")
+    parser.add_argument("config_file")
+    args = parser.parse_args()
+    log.debug(args)
+    return args
+
+
+def run(args):
+    config_filename = args.config_file
     log.debug("config file: %s", config_filename)
     from utils import ReadConfig
     config = ReadConfig(config_filename)
@@ -24,4 +28,7 @@ if __name__ == '__main__':
     log.debug('database: %s', str(db))
     from weekend_search import WeekendSearch
     weekend = WeekendSearch(db)
-     
+
+if __name__ == "__main__":
+    args = parseArgs()
+    run(args)
