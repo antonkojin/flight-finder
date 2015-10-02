@@ -13,7 +13,9 @@ def parseArgs():
     parser.add_argument("-p", "--parse", action="store_true")
     parser.add_argument("-w", "--weekends", action="store_true")
     parser.add_argument("config_file")
-    parser.add_argument("-d", "--debug", action="store_true")
+    exclusive = parser.add_mutually_exclusive_group()
+    exclusive.add_argument("-d", "--debug", action="store_true")
+    exclusive.add_argument("-i", "--info", action="store_true")
     args = parser.parse_args()
     log.debug(args)
     if not args.parse and not args.weekends:
@@ -43,6 +45,8 @@ def run(args):
     log.debug("configs: %s", config)
     if args.debug:
         logging.basicConfig(level=logging.DEBUG)
+    elif args.info:
+        logging.basicConfig(level=logging.INFO)
     if args.parse:
         runParse(config)
     if args.weekends:
