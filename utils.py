@@ -1,6 +1,13 @@
 #!/usr/bin/env python3
 # functions.py
 
+
+def SortFlightsByDate(_list):
+    return sorted(_list, key=lambda d: d['on'])
+
+def SortFlightsByPrice(_list):
+    return sorted(_list, key=lambda d: d['onPrice'] + d['backPrice'])
+
 def WriteJson(filename, data):
     import json
     with open(filename, 'w') as f:

@@ -25,12 +25,6 @@ def run(args):
     config = ReadConfig(config_filename)
     log.debug("configs: %s", config)
 
-#    from utils import ReadJson
-#    db = ReadJson(config['db'])
-#    log.debug('database: %s', str(db))
-#    from weekend_search import WeekendSearch
-#    weekend = WeekendSearch(db)
-
 if __name__ == "__main__":
     args = parseArgs()
     run(args)
@@ -40,3 +34,10 @@ if __name__ == "__main__":
 #         flights = scraper.getFlights()
 #     from utils import WriteJson
 #     WriteJson(config['db'], flights)
+
+#    from utils import ReadJson
+#    db = ReadJson(config['db'])
+#    log.debug('database: %s', str(db))
+#    from viewer import Viewer
+#    view = Viewer(config)
+#    view.printWeekendFlightsByPrice()
