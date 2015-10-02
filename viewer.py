@@ -4,6 +4,7 @@
 import logging
 log = logging.getLogger(__name__)
 
+
 class Viewer:
     def __init__(self, config):
         self.config = config
@@ -33,7 +34,6 @@ class Viewer:
             ))
         s = '\n'.join(s)
         print(s)
-
 
     def printHistogram(self):
         pass
