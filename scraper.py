@@ -20,7 +20,8 @@ class Scraper:
         self.baseUrl = 'https://www.bookryanair.com/SkySales/Booking.aspx?culture=en-GB&lc=en-GB#Search'
         log.debug('scraper: %s', str(self))
         from selenium import webdriver
-        self.webdriver = webdriver.PhantomJS()
+        self.service_args = ['--load-images=false']
+        self.webdriver = webdriver.PhantomJS(service_args=self.service_args)
         log.debug('webdriver opened')
 
     def parse(self, _date):
