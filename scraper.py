@@ -80,6 +80,9 @@ class Scraper:
             self._add_db(_datetime, price, isReturn=True)
 
     def _add_db(self, _datetime, price, isReturn=False):
+        ### READ flights json from file
+        from utils import ReadJson
+        self.flights = ReadJson(self.config['db'])
         if isReturn:
             db = self.flights['back']
         else:
@@ -90,6 +93,9 @@ class Scraper:
         if str(_datetime.time()) not in db[str(_datetime.date())]:
             db[str(_datetime.date())][str(_datetime.time())] = {}
         db[str(_datetime.date())][str(_datetime.time())][str(datetime.today())] = price
+        ### WRITE flights json to file
+        from utils import WriteJson
+        WriteJson(self.config['db'], self.flights)
 
     def getFlights(self):
         for date in self.dates:
