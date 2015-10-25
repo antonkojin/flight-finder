@@ -4,9 +4,11 @@
 import logging
 log = logging.getLogger(__name__)
 
+
 def _isFriday(_date):
     isFriday = _date.isoweekday() == 5
     return isFriday
+
 
 def _nextSunday(_date):
     from datetime import timedelta
@@ -14,6 +16,7 @@ def _nextSunday(_date):
     daysDelta = timedelta(days)
     sunday = _date + daysDelta
     return sunday
+
 
 def WeekendSearch(db):
     weekends = []
@@ -33,8 +36,8 @@ def WeekendSearch(db):
                 priceLastCheckLastTimeFriday = float(on_db[str(friday)][str(lastTimeFriday)][lastCheckLastTimeFridayStr])
                 timesSunday = sorted(list(back_db[str(sunday)].keys()))
                 lastTimeSunday = StringToTime(timesSunday[-1])
-                checksLastTimeSunday = sorted(list(back_db[str(sunday)][str(lastTimeSunday)].keys()))
-                lastCheckLastTimeSundayStr = checksLastTimeSunday[-1]
+                # checksLastTimeSunday = sorted(list(back_db[str(sunday)][str(lastTimeSunday)].keys()))
+                # lastCheckLastTimeSundayStr = checksLastTimeSunday[-1]
                 priceLastCheckLastTimeSunday = float(on_db[str(friday)][str(lastTimeFriday)][lastCheckLastTimeFridayStr])
                 totalPrice = priceLastCheckLastTimeFriday + priceLastCheckLastTimeSunday
                 from collections import OrderedDict
