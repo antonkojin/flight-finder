@@ -2,11 +2,20 @@
 # functions.py
 
 
+def StringsToDates(_list):
+    dates = []
+    for strDate in _list:
+        dates.append(StringToDate(strDate))
+    return sorted(dates)
+
+
 def SortFlightsByDate(_list):
     return sorted(_list, key=lambda d: d['on'])
 
+
 def SortFlightsByPrice(_list):
     return sorted(_list, key=lambda d: d['onPrice'] + d['backPrice'])
+
 
 def WriteJson(filename, data):
     import json
@@ -15,7 +24,8 @@ def WriteJson(filename, data):
                   sort_keys=True,
                   indent=2,
                   separators=(",", ": ")
-        )
+                  )
+
 
 def ReadJson(filename):
     import json
@@ -23,19 +33,23 @@ def ReadJson(filename):
         config = json.load(file)
     return config
 
+
 def StringToDate(string):
     from datetime import datetime
     return datetime.strptime(string, '%Y-%m-%d').date()
 
+
 def StringToTime(string):
     from datetime import datetime
     return datetime.strptime(string, '%H:%M:%S').time()
+
 
 def ReadConfig(filename):
     config = ReadJson(filename)
     config['from_date'] = StringToDate(config['from_date'])
     config['to_date'] = StringToDate(config['to_date'])
     return config
+
 
 def GenerateDates(date_start, date_end):
     from datetime import date, timedelta
