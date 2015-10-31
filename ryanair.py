@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 # scraper.py
 
+"""
+TODO: A = { (x,y) for (x,y) in Flights if x < y }
+sort(a)
+"""
+
 import logging
 # logging.basicConfig(level=logging.INFO)  # debug or info
 # logging.basicConfig(level=logging.DEBUG)  # debug or info
