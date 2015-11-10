@@ -2,11 +2,30 @@
 # functions.py
 
 
+def Flight(on, onTime, onPrice, back, backTime, backPrice):
+    from collections import OrderedDict
+    flight = OrderedDict([
+        ('on', on), ('onTime', onTime), ('onPrice', onPrice),
+        ('back', back), ('backTime', backTime), ('backPrice', backPrice),
+        ('totalPrice', onPrice + backPrice)
+    ])
+    return flight
+
+
+def StringsToDates(_list):
+    dates = []
+    for strDate in _list:
+        dates.append(StringToDate(strDate))
+    return sorted(dates)
+
+
 def SortFlightsByDate(_list):
     return sorted(_list, key=lambda d: d['on'])
 
+
 def SortFlightsByPrice(_list):
     return sorted(_list, key=lambda d: d['onPrice'] + d['backPrice'])
+
 
 def WriteJson(filename, data):
     import json
@@ -15,7 +34,8 @@ def WriteJson(filename, data):
                   sort_keys=True,
                   indent=2,
                   separators=(",", ": ")
-        )
+                  )
+
 
 def ReadJson(filename):
     import json
@@ -23,19 +43,28 @@ def ReadJson(filename):
         config = json.load(file)
     return config
 
+
 def StringToDate(string):
     from datetime import datetime
     return datetime.strptime(string, '%Y-%m-%d').date()
 
+
 def StringToTime(string):
     from datetime import datetime
     return datetime.strptime(string, '%H:%M:%S').time()
+
+
+def StringToDatetime(dateString, timeString):
+    from datetime import datetime
+    return datetime(StringToDate(dateString), StringToTime(timeString))
+
 
 def ReadConfig(filename):
     config = ReadJson(filename)
     config['from_date'] = StringToDate(config['from_date'])
     config['to_date'] = StringToDate(config['to_date'])
     return config
+
 
 def GenerateDates(date_start, date_end):
     from datetime import date, timedelta

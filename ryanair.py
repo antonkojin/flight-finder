@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # scraper.py
 
+from signal import signal, SIGPIPE, SIG_DFL
+signal(SIGPIPE,SIG_DFL)
 import logging
 # logging.basicConfig(level=logging.INFO)  # debug or info
 # logging.basicConfig(level=logging.DEBUG)  # debug or info
@@ -12,14 +14,15 @@ def parseArgs():
     parser = ArgumentParser()
     parser.add_argument("-p", "--parse", action="store_true")
     parser.add_argument("-w", "--weekends", action="store_true")
+    parser.add_argument("-t", "--test", action="store_true")
     parser.add_argument("config_file")
     exclusive = parser.add_mutually_exclusive_group()
     exclusive.add_argument("-d", "--debug", action="store_true")
     exclusive.add_argument("-i", "--info", action="store_true")
     args = parser.parse_args()
     log.debug(args)
-    if not args.parse and not args.weekends:
-        parser.error("at least one of --parse or --weekends is required")
+    # if not args.parse and not args.weekends:
+    #     parser.error("at least one of --parse or --weekends is required")
     return args
 
 
@@ -37,6 +40,14 @@ def runWeekends(config):
     view.printWeekendFlightsByPrice()
 
 
+def runTest(config):
+    import free_days
+    searcher = free_days.Searcher(config)
+    flights = searcher.searchFreeDaysFlights()
+    from pprint import pprint
+    pprint(flights)
+
+
 def run(args):
     config_filename = args.config_file
     log.debug("config file: %s", config_filename)
@@ -51,6 +62,8 @@ def run(args):
         runParse(config)
     if args.weekends:
         runWeekends(config)
+    if args.test:
+        runTest(config)
 
 
 if __name__ == "__main__":

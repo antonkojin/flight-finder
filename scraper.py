@@ -22,6 +22,7 @@ class Scraper:
         from selenium import webdriver
         self.service_args = ['--load-images=false']
         self.webdriver = webdriver.PhantomJS(service_args=self.service_args)
+        # self.webdriver = webdriver.Firefox()
         log.debug('webdriver opened')
 
     def parse(self, _date):
