@@ -12,37 +12,31 @@ def WeekendSearch(db):
 
 def test(db):
     weekends = []
-    on_db = db['on'].keys()
-    back_db = db['back'].keys()
+    on_db = db['on']
+    back_db = db['back']
     from utils import StringsToDates
-    on_list = StringsToDates(on_db)
+    on_list = StringsToDates(on_db.keys())
     log.debug(on_list)
-    back_list = StringsToDates(back_db)
+    back_list = StringsToDates(back_db.keys())
     log.debug(back_list)
     onsAndBacks = [(on, back) for on in on_list for back in back_list if _isBackForOn(on, back)]
     log.debug(onsAndBacks)
     for on, back in onsAndBacks:
         from utils import StringToTime
-        timesOn = [StringToTime(time) for time in sorted(list(on_db[str(on)].keys()))]
+        onTimes = sorted([StringToTime(time) for time in list(on_db[str(on)].keys())])
         if(_isFriday(on)):
-            timesOn = timesOn[-1:]
-        if(_isSaturday(on)):
-            timesOn = timesOn[:-2]
-        log.debug(timesOn)
+            onTimes = onTimes[-1:]
+        log.debug(onTimes)
 
-        timesBack = sorted([StringToTime(_time) for _time in list(back_db[str(back)].keys())])
-
-        # from utils import StringToTime
-        # lastTimeOn = StringToTime(timesOn[-1])
-        # checksLastTimeOn = sorted(list(on_db[str(on)][str(lastTimeOn)].keys()))
-        # lastCheckLastTimeOnStr = checksLastTimeOn[-1]
-        # priceLastCheckLastTimeOn = float(on_db[str(on)][str(lastTimeOn)][lastCheckLastTimeOnStr])
-        # timesBack = sorted(list(back_db[str(back)].keys()))
-        # lastTimeBack = StringToTime(timesBack[-1])
-        # priceLastCheckLastTimeBack = float(on_db[str(on)][str(lastTimeOn)][lastCheckLastTimeOnStr])
-        # totalPrice = priceLastCheckLastTimeOn + priceLastCheckLastTimeBack
-        from utils import Flight
-        weekends.append(Flight(on, onTime, onPrice, back, backTime, backPrice))
+        backTimes = sorted([StringToTime(_time) for _time in list(back_db[str(back)].keys())])
+        log.debug(backTimes)
+        for onTime, backTime in [(onTime, backTime) for onTime in onTimes for backTime in backTimes]:
+            onPriceKey = sorted(on_db[str(on)][str(onTime)].keys())[-1]
+            onPrice = on_db[str(on)][str(onTime)][onPriceKey]
+            backPriceKey = sorted(back_db[str(back)][str(backTime)].keys())[-1]
+            backPrice = back_db[str(back)][str(backTime)][backPriceKey]
+            from utils import Flight
+            weekends.append(Flight(on, onTime, onPrice, back, backTime, backPrice))
     return weekends
 
 
