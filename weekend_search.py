@@ -19,6 +19,24 @@ def _nextSunday(_date):
 
 
 def WeekendSearch(db):
+    return test(db)
+    # return _WeekendSearch(db)
+
+
+def test(db):
+    weekends = []
+    print("sono il test")
+    # from utils import Flight
+    on_db = db['on']
+    back_db = db['back']
+    # from utils import StringToDate, StringToTime
+    for StringToDate(date_str) in on_db:
+        _date = StringToDate(date_str)
+
+    return weekends
+
+
+def _WeekendSearch(db):
     weekends = []
     on_db = db['on']
     back_db = db['back']
@@ -36,8 +54,6 @@ def WeekendSearch(db):
                 priceLastCheckLastTimeFriday = float(on_db[str(friday)][str(lastTimeFriday)][lastCheckLastTimeFridayStr])
                 timesSunday = sorted(list(back_db[str(sunday)].keys()))
                 lastTimeSunday = StringToTime(timesSunday[-1])
-                # checksLastTimeSunday = sorted(list(back_db[str(sunday)][str(lastTimeSunday)].keys()))
-                # lastCheckLastTimeSundayStr = checksLastTimeSunday[-1]
                 priceLastCheckLastTimeSunday = float(on_db[str(friday)][str(lastTimeFriday)][lastCheckLastTimeFridayStr])
                 totalPrice = priceLastCheckLastTimeFriday + priceLastCheckLastTimeSunday
                 from collections import OrderedDict

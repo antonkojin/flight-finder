@@ -2,6 +2,16 @@
 # functions.py
 
 
+def Flight(on, onTime, onPrice, back, backTime, backPrice):
+    from collections import OrderedDict
+    flight = OrderedDict([
+        ('on', on), ('onTime', onTime), ('onPrice', onPrice),
+        ('back', back), ('backTime', backTime), ('backPrice', backPrice),
+        ('totalPrice', onPrice + backPrice)
+    ])
+    return flight
+
+
 def StringsToDates(_list):
     dates = []
     for strDate in _list:
