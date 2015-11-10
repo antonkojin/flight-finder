@@ -20,20 +20,20 @@ class Viewer:
     def printWeekendFlightsByPrice(self):
         weekendFlights = self._searchWeekendFlights()
         s = []
-        f = '{0:10}\t{1:5}\t{2:>6}\t{3:10}\t{4:5}\t{5:>6}\t{6:>6}'
-        s.append(f.format('on', 'time', 'price', 'back', 'time', 'price', 'total'))
+        print('{:10}\t{:5}\t{:>6}\t{:10}\t{:5}\t{:>6}\t{:>6}'.format(
+                'on', 'time', 'price', 'back', 'time', 'price', 'total'
+                ))
+        f = '{0:10}\t{1:5}\t{2:>6,.2f}\t{3:10}\t{4:5}\t{5:>6,.2f}\t{6:>6,.2f}'
         for flight in weekendFlights:
-            s.append(f.format(
+            print(f.format(
                 str(flight['on']),
                 str(flight['onTime'])[:-3],
-                str(flight['onPrice']),
+                flight['onPrice'],
                 str(flight['back']),
                 str(flight['backTime'])[:-3],
-                str(flight['backPrice']),
-                str(flight['totalPrice'])
+                flight['backPrice'],
+                flight['totalPrice']
             ))
-        s = '\n'.join(s)
-        print(s)
 
     def printHistogram(self):
         pass

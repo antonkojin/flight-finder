@@ -36,7 +36,9 @@ def test(db):
             backPriceKey = sorted(back_db[str(back)][str(backTime)].keys())[-1]
             backPrice = back_db[str(back)][str(backTime)][backPriceKey]
             from utils import Flight
-            weekends.append(Flight(on, onTime, onPrice, back, backTime, backPrice))
+            flight = Flight(on, onTime, onPrice, back, backTime, backPrice)
+            log.debug(flight)
+            weekends.append(flight)
     return weekends
 
 
