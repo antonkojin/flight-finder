@@ -5,9 +5,47 @@ import logging
 log = logging.getLogger(__name__)
 
 
+def WeekendSearch(db):
+    return test(db)
+    # return _WeekendSearch(db)
+
+
+def test(db):
+    weekends = []
+    # from utils import Flight
+    from utils import StringsToDates
+    on_list = StringsToDates(db['on'].keys())
+    log.debug(on_list)
+    back_list = StringsToDates(db['back'].keys())
+    log.debug(back_list)
+    l = [(on, back) for on in on_list for back in back_list if _isBackForOn(on, back)]
+    log.debug(l)
+    from pprint import pprint
+    pprint(l)
+    # l = [(on, back) for on in on_list if isOn(on) for back in back_list if isBack(back)]
+    # from utils import StringToDate, StringToTime
+
+    return weekends
+
+
+def _isBackForOn(on, back):
+    onsAndBacks = (_isFriday(on) or _isSaturday(on)) and _isSunday(back)
+    from datetime import timedelta
+    isBackForOn = back >= on and back <= on + timedelta(2)
+    return onsAndBacks and isBackForOn
+
+
 def _isFriday(_date):
     isFriday = _date.isoweekday() == 5
     return isFriday
+
+
+def _isSaturday(_date):
+    return _date.isoweekday() == 6
+
+
+def _isSunday(_date):
+        return _date.isoweekday() == 7
 
 
 def _nextSunday(_date):
@@ -16,24 +54,6 @@ def _nextSunday(_date):
     daysDelta = timedelta(days)
     sunday = _date + daysDelta
     return sunday
-
-
-def WeekendSearch(db):
-    return test(db)
-    # return _WeekendSearch(db)
-
-
-def test(db):
-    weekends = []
-    print("sono il test")
-    # from utils import Flight
-    on_db = db['on']
-    back_db = db['back']
-    # from utils import StringToDate, StringToTime
-    for StringToDate(date_str) in on_db:
-        _date = StringToDate(date_str)
-
-    return weekends
 
 
 def _WeekendSearch(db):

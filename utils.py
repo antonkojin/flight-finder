@@ -54,6 +54,11 @@ def StringToTime(string):
     return datetime.strptime(string, '%H:%M:%S').time()
 
 
+def StringToDatetime(dateString, timeString):
+    from datetime import datetime
+    return datetime(StringToDate(dateString), StringToTime(timeString))
+
+
 def ReadConfig(filename):
     config = ReadJson(filename)
     config['from_date'] = StringToDate(config['from_date'])
