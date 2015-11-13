@@ -19,17 +19,20 @@ class Viewer:
 
     def printWeekendFlightsByPrice(self):
         weekendFlights = self._searchWeekendFlights()
+        weekday = {5:'V', 6:'S', 7:'D'}
         s = []
-        print('{:10}\t{:5}\t{:>6}\t{:10}\t{:5}\t{:>6}\t{:>6}'.format(
-                'on', 'time', 'price', 'back', 'time', 'price', 'total'
+        print('{:10}  {}  {:5}  {:>6}    {:10}  {}  {:5}  {:>6}  {:>6}'.format(
+                'on', 'w', 'time', 'price', 'back', 'w', 'time', 'price', 'total'
                 ))
-        f = '{0:10}\t{1:5}\t{2:>6,.2f}\t{3:10}\t{4:5}\t{5:>6,.2f}\t{6:>6,.2f}'
+        f = '{:10}  {}  {:5}  {:>6,.2f}    {:10}  {}  {:5}  {:>6,.2f}  {:>6,.2f}'
         for flight in weekendFlights:
             print(f.format(
                 str(flight['on']),
+                flight['on'].isoweekday(),
                 str(flight['onTime'])[:-3],
                 flight['onPrice'],
                 str(flight['back']),
+                flight['back'].isoweekday(),
                 str(flight['backTime'])[:-3],
                 flight['backPrice'],
                 flight['totalPrice']
