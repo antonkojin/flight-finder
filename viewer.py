@@ -28,11 +28,11 @@ class Viewer:
         for flight in weekendFlights:
             print(f.format(
                 str(flight['on']),
-                flight['on'].isoweekday(),
+                weekday[flight['on'].isoweekday()],
                 str(flight['onTime'])[:-3],
                 flight['onPrice'],
                 str(flight['back']),
-                flight['back'].isoweekday(),
+                weekday[flight['back'].isoweekday()],
                 str(flight['backTime'])[:-3],
                 flight['backPrice'],
                 flight['totalPrice']
