@@ -19,7 +19,8 @@ def test(db):
     log.debug(on_list)
     back_list = StringsToDates(back_db.keys())
     log.debug(back_list)
-    onsAndBacks = [(on, back) for on in on_list for back in back_list if _isBackForOn(on, back)]
+    from datetime import date
+    onsAndBacks = [(on, back) for on in on_list for back in back_list if _isBackForOn(on, back) and on >= date.today() and back >= date.today()]
     log.debug(onsAndBacks)
     for on, back in onsAndBacks:
         from utils import StringToTime
